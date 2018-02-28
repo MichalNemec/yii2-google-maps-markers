@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2mod\google\maps\markers;
+namespace nexen\google\maps\markers;
 
 use Yii;
 use yii\base\InvalidConfigException;
