@@ -46,6 +46,7 @@ echo yii2mod\google\maps\markers\GoogleMaps::widget([
                 'country' => 'Ukraine',
             ],
             'htmlContent' => '<h1>Kharkiv</h1>',
+            'icon'        => 'url/to/icon'
         ],
         [
             'location' => [
@@ -95,6 +96,8 @@ OR via yii params configuration. For example:
     ],
 ],
 ```
+
+Dont forget to move images to your website, because cluster images could not work properly!
 
 To get key, please visit [page](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
