@@ -14,7 +14,7 @@ class GoogleMapsAsset extends AssetBundle
     /**
      * @var string
      */
-    public $sourcePath = '@vendor/yii2mod/yii2-google-maps-markers/assets';
+    public $sourcePath = '@vendor/nexen/yii2-google-maps-markers-with-icon/assets';
 
     /**
      * @var array
