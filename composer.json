@@ -1,5 +1,5 @@
 {
-    "name": "yii2mod/yii2-google-maps-markers",
+    "name": "nexen/yii2-google-maps-markers-with-icon",
     "description": "Google Maps Markers displays a set of user addresses as markers on the map.",
     "type": "yii2-extension",
     "keywords": [
@@ -23,6 +23,10 @@
             "email": "morontt@gmail.com",
             "homepage": "https://morontt.info"
         }
+        {
+            "name": "Michal Němec",
+            "email": "nexenwd@gmail.com"
+        }
     ],
     "require": {
         "yiisoft/yii2": "*"
@@ -32,7 +36,7 @@
     },
     "autoload": {
         "psr-4": {
-            "yii2mod\\google\\maps\\markers\\": ""
+            "nexen\\google\\maps\\markers\\": ""
         }
     }
 }
