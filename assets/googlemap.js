@@ -31,12 +31,12 @@ yii.googleMapManager = (function ($) {
         /**
          * Get address and place it on map
          */
-        getAddress: function (location, htmlContent, loadMap) {
+        getAddress: function (location, htmlContent, loadMap, icon) {
             var search = location.address;
             pub.geocoder.geocode({'address': search}, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var place = results[0];
-                    pub.drawMarker(place, htmlContent);
+                    pub.drawMarker(place, htmlContent, icon);
                     pub.delay = 300;
                 }
                 else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
@@ -49,7 +49,7 @@ yii.googleMapManager = (function ($) {
                         pub.nextAddress--;
                         pub.geocodeData[pub.nextAddress].address = pub.geocodeData[pub.nextAddress].country;
                     } else {
-                        pub.drawMarker(pub.mapOptions.center, htmlContent);
+                        pub.drawMarker(pub.mapOptions.center, htmlContent, icon);
                     }
                 }
                 loadMap();
@@ -99,12 +99,13 @@ yii.googleMapManager = (function ($) {
 
             return true;
         },
-        drawMarker: function (place, htmlContent) {
+        drawMarker: function (place, htmlContent, icon) {
             var position = pub.updatePosition(place.geometry.location);
             pub.bounds.extend(position);
             var marker = new google.maps.Marker({
                 map: pub.map,
-                position: position
+                position: position,
+                icon: icon
             });
             bindInfoWindow(marker, pub.map, pub.infoWindow, htmlContent);
             pub.markerClusterer.addMarker(marker);
@@ -196,7 +197,8 @@ yii.googleMapManager = (function ($) {
                     address: pub.geocodeData[pub.nextAddress].address
                 };
                 var htmlContent = pub.geocodeData[pub.nextAddress].htmlContent;
-                pub.getAddress(location, htmlContent, loadMap);
+                var icon = pub.geocodeData[pub.nextAddress].icon;
+                pub.getAddress(location, htmlContent, loadMap, icon);
                 pub.nextAddress++;
             }
         }, pub.delay);
