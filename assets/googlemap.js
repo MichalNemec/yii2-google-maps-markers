@@ -201,6 +201,9 @@ yii.googleMapManager = (function ($) {
                 pub.getAddress(location, htmlContent, loadMap, icon);
                 pub.nextAddress++;
             }
+            else {
+                $('.map_loader').remove();
+            }
         }, pub.delay);
     }
 
