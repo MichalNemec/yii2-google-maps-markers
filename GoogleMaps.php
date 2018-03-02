@@ -172,7 +172,7 @@ class GoogleMaps extends Widget
         foreach ($this->userLocations as $data) {
             $result[] = [
                 'country' => ArrayHelper::getValue($data['location'], 'country'),
-                'address' => implode(',', ArrayHelper::getValue($data, 'location')),
+                'address' => ArrayHelper::getValue($data, 'location'),
                 'htmlContent' => ArrayHelper::getValue($data, 'htmlContent'),
                 'icon' => ArrayHelper::getValue($data, 'icon'),
             ];

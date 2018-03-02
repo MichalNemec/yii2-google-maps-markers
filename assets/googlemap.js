@@ -6,7 +6,7 @@ yii.googleMapManager = (function ($) {
     var pub = {
         nextAddress: 0,
         zeroResult: 0,
-        delay: 300,
+        delay: 50,
         bounds: [],
         geocoder: [],
         markerClusterer: false,
@@ -16,7 +16,7 @@ yii.googleMapManager = (function ($) {
         containerId: 'map_canvas',
         geocodeData: [],
         mapOptions: {
-            center: new google.maps.LatLng(53.666464, -2.686693)
+            center: new google.maps.LatLng(49.841285, 15.214745)
         },
         listeners: [],
         renderEmptyMap: true,
@@ -32,38 +32,21 @@ yii.googleMapManager = (function ($) {
          * Get address and place it on map
          */
         getAddress: function (location, htmlContent, loadMap, icon) {
+            //LAT LON
             var search = location.address;
-            pub.geocoder.geocode({'address': search}, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var place = results[0];
-                    pub.drawMarker(place, htmlContent, icon);
-                    pub.delay = 300;
-                }
-                else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                    pub.nextAddress--;
-                    pub.delay = 2000;
-                }
-                else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
-                    //If first query return zero results, then set address the value of the country
-                    if (location.address != location.country) {
-                        pub.nextAddress--;
-                        pub.geocodeData[pub.nextAddress].address = pub.geocodeData[pub.nextAddress].country;
-                    } else {
-                        pub.drawMarker(pub.mapOptions.center, htmlContent, icon);
-                    }
-                }
-                loadMap();
-            });
+            pub.drawMarker(search, htmlContent, icon);
+            loadMap();
         },
         updatePosition: function (position) {
             var coordinates = [position];
-            if (!pub.isPositionUnique(position)) {
-                var latitude = position.lat();
+            var pos = new google.maps.LatLng(position.lat, position.lng);
+            if (!pub.isPositionUnique(pos)) {
+                var latitude = pos.lat();
                 var lngModify = (Math.abs(Math.cos(latitude)) / 111111) * -5;
                 var iteration = 0;
                 while (true) {
                     iteration++;
-                    var newLng = position.lng() + (lngModify * iteration);
+                    var newLng = pos.lng() + (lngModify * iteration);
                     position = new google.maps.LatLng(latitude + 0.00001, newLng);
                     if (pub.isPositionUnique(position)) {
                         break;
@@ -100,7 +83,7 @@ yii.googleMapManager = (function ($) {
             return true;
         },
         drawMarker: function (place, htmlContent, icon) {
-            var position = pub.updatePosition(place.geometry.location);
+            var position = pub.updatePosition(place/*.geometry.location*/);
             pub.bounds.extend(position);
             var marker = new google.maps.Marker({
                 map: pub.map,
